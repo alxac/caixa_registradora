@@ -1,0 +1,59 @@
+==>Requisitos Técnicos
+
+1.Desenvolvimento com .NET C#; (Se puder em NET6 melhor)
+
+2.Deve ter um Backend em API RestFull;
+  Esta API deve ser um Projeto separado do FrontEnd.
+  Como não teremos um Banco de Dados para a API armazendar dados, isso pode ser feito com dados instantâneos em memória
+  ou se preferir armazenando em arquivo txt/xml/json de dados junto ao projeto da API.
+
+3.Deve ter um FrontEnd sendo algum tipo de interface para o usuário;
+  Projeto separado da API pondendo ser um Executável, ou preferencialmente um projeto Web como Asp.Net, Angular ou Blazor
+
+4.Ao final deve ser enviado por email:
+  - ZIP com o projeto da API Backend;
+  - ZIP com o projeto da Interface Frontend;
+
+6.Demais Requisitos Técnicos estão livres para sua escolha e interpretação.
+  - Uso de Padrões de Projeto;
+  - Boas Práticas de Programação;
+  - API com Swagger;
+  - Comentários técnicos em código;
+  - Etc;
+ 
+==>Requisitos de Negócio
+
+------Projeto Caixa Registradora-----
+
+a. Deve ser criada uma aplicação de Caixa Registradora que seja capaz de calcular a quantidade de troco considerando
+o REAL BRASILEIRO como moeda, podendo:
+	-> receber valores em cédulas de papel e moedas;
+	-> gerando troco em cédulas de papel e moedas.
+Serão consideradas válidas as cédulas e moedas vigentes hoje.[200,100,50,10,5,2][1,50,10,5]
+
+b. Deve haver uma opção de abastecimento de valores no caixa:
+
+	i. Deve existir uma operação "RESET" fazendo com que o caixa inicie zerado.
+	ii. Antes de receber operações o caixa precisa ser "alimentado" com cédulas e moedas, então deve existir uma operação "Alimentar o caixa". A alimentação ocorre informando a cédula ou moeda e total de unidades.
+	iii. O caixa pode ser "alimentado" quantas vezes for necessário.
+	iv. Deve ser informado o valor da moeda e quantidades.
+		Ex: 5-C10 = cinco cédulas de dez reais, 20-M25 = vinte moedas de vinte e cinco centavos;
+	v. Deve existir uma operação "Saldo do Caixa" que deve exibir o valor montante existente no caixa e o total de cada cédula e moeda que estiver no caixa.
+		Cédula ou moeda que não existir no caixa não precisa ser listado.
+		Ex(5-C10 = cinco cédulas de dez reais; 20-M25 = vinte moedas de vinte e cinco centavos). Com isso o "SaldodoCaixa" fica = R$55,00 (5-C10 e 20-M25);
+
+c. Deve haver uma opção para sangria de valores do caixa.
+	i. A sangria será feita apenas pelas cédulas de maior valor sempre que o caixa exceder o montante de 500 reais não podendo deixar menos de 300 reais no caixa;
+	ii. Não pode haver caixa negativo.
+	      
+d. Deve suportar as operações de Caixa Registradora com Cédulas e Moedas:
+	i. A operação "Recebimento" deve solicitar um "ValorOperação" deve ser informado pelo usuário, e o "ValorPago" também deve ser informado pelo usuário, indicando quanto em cédula e/ou moedas foi pago. A Caixa Registradora deve verificar se o "ValorPago" pagou o "ValorOperação", ou existe um "Troco" a ser retornado pela Caixa Registradora.
+		Esse "Troco" deve ser gerado com o menor número de unidades possível que existir na Caixa Registradora.
+          Ex (ValOperacao=R$52,00 - ValPago= 1-C50+1-C2) neste exemplo a Operação de 52 reais foi paga com 1 cédula de 50 + 1 cédula de 2, com isso a Caixa Registradora deve resultar "Troco=0".
+	Caso o "ValorPago" seja superior ao "ValorOperacao", o Troco será positivo e o resultado deve indicar qual a combinação de unidades cédulas e moedas são necessários para formar o Troco com o mínimo de unidades possível.
+		Ex (ValOperacao=R$52,00 - ValPago= 1-C50+1-C5) neste exemplo o "Troco=3,00" e o algoritmo precisa montar o troco dando como resultado a menor quantidade de unidades possível que tiver no caixa, digamos que existe no caixa uma cédula de 2 e 2 moedas de 50 centavos o resultado deve ser: "Troco = 1-C2+2M50"
+
+e. Deve ter uma operação "Extrato".
+	Esta operação deve mostrar todas as operações de "Recebimento", "Pagamento"  e "Troco" desde o último "Reset".
+	
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
